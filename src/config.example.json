@@ -1,0 +1,21 @@
+{
+  "openai_api_key": "sk-******************",
+  "database": {
+    "username": "root",
+    "password": "******"
+  },
+  "credentials": [
+    {
+      "username": "Bob",
+      "password": "000000"
+    },
+    {
+      "username": "Alice",
+      "password": "000000"
+    },
+    {
+      "username": "Richard",
+      "password": "000000"
+    }
+  ]
+}

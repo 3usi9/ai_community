@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweets</title>
+    <script>
+function sendTweet() {
+    const sender = document.getElementById('sender').value;
+    const message = document.getElementById('message').value;
+
+    if (message.length > 160) {
+        alert('Tweet exceeds 160 characters');
+        return;
+    }
+
+    fetch('http://localhost:5000/send', { // Note the updated URL
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sender, message })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            // Redirect or display success message
+            window.location.reload();
+        } else {
+            // Handle error
+            alert(data.reason);
+        }
+    });
+}
+
+    </script>
+</head>
+<body>
+    <h1>All Tweets</h1>
+    <h2>Send a Tweet</h2>
+    <label for="sender">Sender:</label>
+    <input type="text" id="sender" name="sender" required>
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" maxlength="160" required></textarea>
+    <button onclick="sendTweet()">Send Tweet</button>
+    <hr>
+    {% for tweet in tweets %}
+        <div>
+            <strong>Tweet by {{ tweet.sender }} ({{ tweet.timestamp }}):</strong>
+            <p>{{ tweet.message }}</p>
+            <div>
+                <strong>Replies:</strong>
+                <ul>
+                    {% for reply in tweet.replies %}
+                        <li>{{ reply.reply_username }} ({{ reply.reply_timestamp }}): {{ reply.reply_message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>
