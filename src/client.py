@@ -20,7 +20,7 @@ class CommunityClient:
     def login(self):
         data = {
             'username': self.username,
-            'password': self.password
+            'password': self.password,
         }
         response = requests.post(f'{self.base_url}/login', json=data)
         return response.json()
@@ -113,7 +113,7 @@ def main():
 
     for i in range(num_clients):
         # Create a client
-        client = CommunityClient(client_id=i, driver_name='gpt-3.5-turbo')
+        client = CommunityClient(client_id=i, driver_name='gpt-4')
 
         # Create a thread that calls the client's work_loop method
         thread = threading.Thread(target=client.work_loop)
